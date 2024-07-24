@@ -1,17 +1,32 @@
 Package: rgisDR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: GIS tools for Dominican Republic boundaries in R
+Version: 0.1.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    c(person(given = "Daniel E.",
+           family = "de la Rosa",
+           role = c("aut", "cre"),
+           email = "me@dnldelarosa.com"),
+    person(given = "Adatar",
+           role = "cph"))
+Description: The rgisDR package provides simple features for the administrative 
+  divisions of the Dominican Republic, facilitating comprehensive geospatial analysis 
+  and mapping. It also includes tools for cleaning and standardizing administrative 
+  names, ensuring accurate and consistent naming conventions across provinces, 
+  municipalities, and municipal districts, among others.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2.9000
-Depends: 
-    R (>= 2.10)
-LazyData: true
+RoxygenNote: 7.3.1
 Imports: 
-    magrittr
+    cli,
+    dplyr,
+    lifecycle,
+    magrittr,
+    purrr,
+    sf,
+    sfDR,
+    stringdist,
+    stringr,
+    tibble,
+    tidyr
+Repository: https://adatar-do.r-universe.dev

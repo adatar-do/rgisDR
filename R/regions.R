@@ -1,5 +1,3 @@
-dr_get_regions <- function(){
-  DR_REG %>%
-    dplyr::left_join(dr_region) %>%
-    sf::st_as_sf()
-}
+#' @importFrom sfDR dr_regions
+#' @export
+sfDR::dr_regions

@@ -1,0 +1,10 @@
+url: ~
+template:
+  bootstrap: 5
+
+reference:
+  - title: "Simple features"
+    description: Functions reexported from <a href="https://adatar-do.github.io/sfDR/" target='_blank'>sfDR</a> package.
+    contents:
+      - reexports
+

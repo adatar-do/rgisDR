@@ -1,61 +1,42 @@
-dr_get_provinces <- function(){
-  DR_PROV %>%
-    left_join(
-      dr_province %>%
-        distinct(PROV_ID, .keep_all = TRUE),
-      by = "PROV_ID",
-      .
-    ) %>%
-    #relocate(OBJECTID_1) %>%
-    #select(-TOPONIMIA) %>%
-    #rename(REG_ID = REG) %>%
-    sf::st_as_sf()
-}
-
-get_dr_provinces <- function(){
-  lifecycle::deprecate_warn("0.1.0", "get_dr_provinces()", "dr_get_provinces()")
-  get_dr_provinces()
-}
+#' @importFrom sfDR dr_provinces
+#' @export
+sfDR::dr_provinces
 
 
-dr_clean_prov_name <- function(names){
-  names %>%
-    stringr::str_to_lower() %>%
-    stringr::str_remove(stringr::regex("provincia", ignore_case = TRUE)) %>%
-    stringr::str_trim() -> data
-  np <- dr_province$PROV_NAME %>% stringr::str_to_lower()
-
-  comb <- expand.grid(unique(data), np)
-  comb[["dist"]] <- 0
-  for (row in 1:nrow(comb)) {
-    dist <- stringdist::stringdist(comb[row, "Var1"], comb[row, "Var2"])
-    comb[row, "dist"] <- dist
+#' Clean Dominican Republic province names
+#' `r lifecycle::badge("experimental")`
+#'
+#' This function cleans and standardizes the names of provinces in the Dominican Republic,
+#' with tolerance for string similarity and options for error handling.
+#'
+#' @param prov Character vector of province names to be cleaned.
+#' @param names Deprecated. Use `prov` instead.
+#' @param .tol Numeric tolerance level for string similarity. Defaults to 0.25.
+#' This parameter controls how similar two strings must be to be considered a match.
+#' A lower value means stricter matching.
+#' @param .on_error Character string specifying the error handling method. Defaults to "fail".
+#' It can be one of the following: "fail" to stop execution on error,
+#' "omit" to ignore unmatched names, or "na" to return NA for unmatched names.
+#'
+#' @return A cleaned character vector of province names.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   # Basic usage with province names
+#'   cleaned_prov_names <- dr_clean_prov_name(c("montePlata", "Azua"))
+#' }
+#'
+dr_clean_prov_name <- function(prov, .tol = 0.25, .on_error = "fail"){
+ .do_names_cleaning(prov, sfDR::dr_provinces(.sf = FALSE, .uniques = FALSE), "PROV_ID", "PROV_NAME", .tol, .on_error) -> res
+  if(.error){
+    cli::cli_abort("")
   }
-  comb  <- dplyr::arrange(comb, Var1, dist)
-  comb <- dplyr::group_by(comb, Var1)
-  comb <- dplyr::summarise(comb, Var2 = dplyr::first(Var2))
-  comb <- dplyr::mutate(comb, dplyr::across(dplyr::everything(), stringr::str_to_title))
-
-  dr_province %>%
-    dplyr::select(Var2 = PROV_NAME, PROV_ID) %>%
-    dplyr::left_join(comb, ., by = "Var2") %>%
-    dplyr::select(-Var2) %>%
-    dplyr::left_join(
-      dr_province %>%
-        dplyr::distinct(PROV_ID, .keep_all = T) %>%
-        dplyr::select(Var2 = PROV_NAME, PROV_ID),
-      by = "PROV_ID"
-    ) %>%
-    dplyr::select(-PROV_ID) -> comb
-  res <- comb[["Var2"]]
-  names(res) <- stringr::str_to_lower(comb[["Var1"]])
-  res <- res[data]
-  names(res) <- NULL
   res
 }
 
-
+#' @rdname dr_clean_prov_name
 dr_prov_clean_name <- function(names){
   lifecycle::deprecate_warn("0.1.0", "dr_prov_clean_name()", "dr_clean_prov_name()")
-  dr_prov_clean_name(names)
+  dr_clean_prov_name(names)
 }
