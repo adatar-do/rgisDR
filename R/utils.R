@@ -20,6 +20,7 @@ dr_correction_matrix <- function(df, original, cleaned){
     tidyr::replace_na("_NA_") %>%
     stringr::str_to_lower() %>%
     stringr::str_squish() %>%
+    stringr::str_remove_all(stringr::regex("[^a-z \\(]", ignore_case = TRUE)) %>%
     stringr::str_remove(stringr::regex("provincia[ ]?")) %>%
     stringr::str_remove(stringr::regex("municipio[ ]?", ignore_case = TRUE)) %>%
     stringr::str_remove(stringr::regex("ayuntamiento [de ]?", ignore_case = TRUE)) %>%

@@ -1,6 +1,6 @@
 Package: rgisDR
 Title: GIS tools for Dominican Republic boundaries in R
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Daniel E.",
            family = "de la Rosa",
