@@ -1,3 +1,13 @@
+# Oportunidades de mejora para formalizar en issues:
+#
+# 1. Eficiencia: Optimizar el uso de expand.grid y el cálculo de distancias para grandes volúmenes de datos, usando métodos de búsqueda aproximada más eficientes.
+# 2. Paralelización: Permitir el uso de procesamiento paralelo (por ejemplo, con furrr o future.apply) para acelerar el cálculo de distancias.
+# 3. Gestión de variantes: Generalizar el manejo de variantes de nombres (no solo " o ") y normalizar variantes antes de comparar.
+# 4. Configurabilidad: Permitir al usuario personalizar fácilmente los patrones de limpieza (palabras a eliminar, reglas, etc.) sin modificar el código fuente.
+# 5. Soporte multilingüe: Adaptar la limpieza para otros idiomas o alfabetos si se espera entrada diversa.
+# 6. Mensajes de error y logs: Mejorar la retroalimentación al usuario, mostrando sugerencias de corrección o resúmenes de cambios.
+# 7. Pruebas unitarias: Asegurar que cada función tenga pruebas automáticas para evitar regresiones y facilitar refactorizaciones.
+
 dr_correction_matrix <- function(df, original, cleaned){
   n <- NULL
 
