@@ -1,6 +1,6 @@
 Package: rgisDR
 Title: GIS tools for Dominican Republic boundaries in R
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     c(person(given = "Daniel E.",
            family = "de la Rosa",
@@ -17,18 +17,20 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Depends: R (>= 4.1.0)
 Imports: 
     cli,
     dplyr,
+    ggplot2,
     lifecycle,
     magrittr,
     purrr,
     rlang,
     sf,
+    sfDR (>= 0.2.2),
     stringdist,
     stringr,
     tibble,
     tidyr
-Suggests:
-    sfDR,
+Additional_repositories: https://adatar-do.r-universe.dev
 Repository: https://adatar-do.r-universe.dev

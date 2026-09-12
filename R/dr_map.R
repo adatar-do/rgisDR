@@ -128,7 +128,7 @@ dr_map_data <- function(data, fill, .level = NULL, .name = NULL, .key = NULL) {
   }
 
   if (is.null(info[["key"]])) {
-    stop("No se pudo determinar con qué variable...")
+    stop("No se pudo determinar con qu\u00e9 variable...")
   }
 
   map_data <- switch(info[["level"]],
@@ -140,7 +140,7 @@ dr_map_data <- function(data, fill, .level = NULL, .name = NULL, .key = NULL) {
   ) %>%
     dplyr::left_join(
       data,
-      by = dplyr::join_by(!!sym(info[["key"]]) == !!sym(info[["name"]]))
+      by = dplyr::join_by(!!rlang::sym(info[["key"]]) == !!rlang::sym(info[["name"]]))
     )
 
   return(map_data)
@@ -213,10 +213,10 @@ dr_geom_sf <- function(data = NULL, ...) {
   if (!is.null(data)) {
     map_data <- dr_map_data(data, fill = .args$fill, .level = .args$level, .name = .args$name, .key = .args$key)
     .args$data <- map_data
-    do.call(geom_sf, .args)
+    do.call(ggplot2::geom_sf, .args)
     #  geom_sf(data = map_data, mapping = .args$mapping, ...)
   } else {
-    do.call(geom_sf, .args)
+    do.call(ggplot2::geom_sf, .args)
   }
 
 }
@@ -257,7 +257,7 @@ dr_map <- function(data, fill, .level = NULL, .name = NULL, .key = NULL, ...) {
 
   .args <- list(...)
   if (is.null(.args$mapping)) {
-    .args$mapping <- ggplot2::aes(fill = !!sym(fill))
+    .args$mapping <- ggplot2::aes(fill = !!rlang::sym(fill))
   }
 
 
